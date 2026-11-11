@@ -117,7 +117,9 @@ try:
             st.plotly_chart(fig, use_container_width=True)
     else:
         show_empty_msg()
+            
         
+
         with col7:
             continent_counts = (
             filtered_df["Continent"].value_counts().reset_index()
@@ -158,7 +160,37 @@ try:
         st.plotly_chart(fig, use_container_width=True)
     else:
         show_empty_msg()
-        
+    # Research Question
+
+
+    st.header("The Research Question")
+
+    # 1 - Top 5 Industries by Funding
+
+    st.header("Top 5 industries by Funding received")
+    industries = df["Industry"].unique()
+    chart_1_data = df.groupby("Industry")["Funding"].sum().reset_index().sort_values(by="Funding", ascending=False).head(5)
+    fig = px.bar(
+    chart_1_data,
+    x="Industry",
+    y="Funding",
+    title="Top 5 Industries"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+
+    # 2 - Top 5 Industries by Valuation
+
+    st.header("Top 5 industries by Valuation")
+    chart_2_data = df.groupby("Industry")["Valuation"].sum().reset_index().sort_values(by="Valuation", ascending=False).head(5)
+    fig = px.bar(
+    chart_2_data,
+    x="Industry",
+    y="Valuation",
+    title="Top 5 Valuation"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
 
 except ValueError as e:
     st.error(
